@@ -3,6 +3,19 @@ NSZipFileReader
 
 Nativescript plugin that allows reading string file content within a zip archive without full unzipping
 
+Installation
+---------
+Cloning the repo
+```
+git clone https://github.com/arno06/nszipfilereader
+```
+
+Add the plugin
+```
+//From your project dir
+tns plugin add ../relative/path/to/nszipfilereader
+```
+
 Usage
 ---------
 ```javascript
