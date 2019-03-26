@@ -32,5 +32,5 @@ zipFileReader.readString("path/to/file.ext")
 
 Dependencies
 -----
- * iOs : [Objective-Zip](https://github.com/gianlucabertani/Objective-Zip)
+ * iOs : [Zip-Zap](https://github.com/pixelglow/ZipZap)
  * Android : None
