@@ -1,26 +1,24 @@
 const FILE_NOT_FOUND = "File not found withing zip archive";
-const BUFFER_SIZE = 1024;
 class NSZipFileReader{
     constructor(pPath){
-        this.zipFile = new OZZipFile(pPath, OZZipFileModeUnzip);
+        let error = null;
+        this.zipFile = ZZArchive.archiveWithURLError(NSURL.fileURLWithPath(pPath), error);
     }
 
     readString(pFile){
-        var ref = this;
+        let ref = this;
         return new Promise(function(pResolve, pReject){
-            if(ref.zipFile.locateFileInZip(pFile)){
-                var read = ref.zipFile.readCurrentFileInZip();
-                var data;
-                var str = "";
-                while(true){
-                    data = NSMutableData.alloc().initWithLength(BUFFER_SIZE);
-                    var bytesRead = read.readDataWithBuffer(data);
-                    if(bytesRead<=0)
-                        break;
-                    str += NSString.alloc().initWithDataEncoding(data, NSUTF8StringEncoding);
+            for(let k = 0; k < ref.zipFile.entries.count; k++){
+                let e = ref.zipFile.entries.objectAtIndex(k);
+                if(e.fileName === pFile){
+                    let error = null;
+                    let data = NSString.alloc().initWithDataEncoding(e.newDataWithError(error), NSUTF8StringEncoding);
+                    pResolve(data.toString());
+                    break;
                 }
-                pResolve(str);
-            }else{
+            }
+
+            if (data === undefined) {
                 pReject(FILE_NOT_FOUND);
             }
         });
